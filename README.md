@@ -2,6 +2,12 @@
 
 helper for stc
 
+## Install
+
+```
+npm install stc-helper
+```
+
 ## How to use
 
 ```js
