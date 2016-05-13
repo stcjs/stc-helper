@@ -7,7 +7,7 @@ helper for stc
 ```js
 import {isFile} from 'stc-helper';
 if(isFile('xxx')){
-	
+  
 }
 ```
 
@@ -20,7 +20,7 @@ check is stream.
 ```js
 import {isStream} from 'stc-helper';
 if(isStream(stream){
-	
+  
 }
 ```
 
@@ -65,7 +65,7 @@ import fs from 'fs'
 
 let fn = promisify(fs.readFile, fs);
 fn('/path/to/file', 'utf8').then(content => {
-	
+  
 })
 ```
 
@@ -77,13 +77,13 @@ get Deferred object.
 import {defer} from 'stc-helper';
 
 let fn => {
-	let deferred = defer();
-	if(xxx){
-		deferred.resolve('xxx');
-	}else{
-		deferred.reject(new Error());
-	}
-	return deferred.promise;
+  let deferred = defer();
+  if(xxx){
+    deferred.resolve('xxx');
+  }else{
+    deferred.reject(new Error());
+  }
+  return deferred.promise;
 }
 
 ```
@@ -100,8 +100,8 @@ async content replace
 import {asyncReplace} from 'stc-helper';
 
 let fn = async content => {
-	return asyncReplace(content, /\d+/, (a, b) => {
-		return Promise.resolve(a);
-	});
+  return asyncReplace(content, /\d+/, (a, b) => {
+    return Promise.resolve(a);
+  });
 }
 ```
