@@ -27,7 +27,12 @@ export const isArray = Array.isArray;
 export function isFunction(obj) {
   return typeof obj === 'function';
 }
-
+/**
+ * is object
+ */
+export function isObject(obj){
+  return Object.prototype.toString.call(obj) === '[object Object]';
+}
 /**
  * is regexp
  */
@@ -70,6 +75,33 @@ export function isDirectory(filePath){
   let stat = fs.statSync(filePath);
   return stat.isDirectory();
 }
+/**
+ * extend
+ */
+export function extend(target, source){
+  let src, copy;
+  if(!target){
+    target = isArray(source) ? [] : {};
+  }
+  if(!source){
+    return target;
+  }
+  for(let key in source){
+    src = target[key];
+    copy = source[key];
+    if(src && src === copy){
+      continue;
+    }
+    if(isObject(copy)){
+      target[key] = extend(src && isObject(src) ? src : {}, copy);
+    }else if(isArray(copy)){
+      target[key] = extend([], copy);
+    }else{
+      target[key] = copy;
+    }
+  }
+  return target;
+}
 
 /**
  * get path files
@@ -84,7 +116,7 @@ export function getFiles(dir, prefix = ''){
   let files = fs.readdirSync(dir);
   let result = [];
   files.forEach(item => {
-    let stat = fs.statSync(dir + path.sep + item);
+    let stat = fs.statSync(path.join(dir, item));
     if (stat.isFile()) {
       result.push(path.join(prefix, item));
     }else if(stat.isDirectory()){
@@ -147,4 +179,11 @@ export async function asyncReplace(content = '', replace, callback){
   });
   result += content.substr(prevIndex);
   return result;
+}
+/**
+ * check if is remote url
+ */
+export function isRemoteUrl(url){
+  url = url.toLowerCase();
+  return url.indexOf('http://') === 0 || url.indexOf('https://') === 0 || url.indexOf('//') === 0;
 }
