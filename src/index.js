@@ -50,20 +50,45 @@ export function isExist(dir) {
 }
 
 /**
+ * check filepath is file
+ */
+export function isFile(filePath){
+  if(!isExist(filePath)){
+    return false;
+  }
+  let stat = fs.statSync(filePath);
+  return stat.isFile();
+}
+
+/**
+ * check path is directory
+ */
+export function isDirectory(filePath){
+  if(!isExist(filePath)){
+    return false;
+  }
+  let stat = fs.statSync(filePath);
+  return stat.isDirectory();
+}
+
+/**
  * get path files
  */
 export function getFiles(dir, prefix = ''){
   if(!isExist(dir)){
     return [];
   }
+  if(isFile(dir)){
+    return [dir];
+  }
   let files = fs.readdirSync(dir);
   let result = [];
   files.forEach(item => {
     let stat = fs.statSync(dir + path.sep + item);
     if (stat.isFile()) {
-      result.push(prefix + item);
+      result.push(path.join(prefix, item));
     }else if(stat.isDirectory()){
-      let cFiles = getFiles(dir + path.sep + item, prefix + item + path.sep);
+      let cFiles = getFiles(path.join(dir, item), path.join(prefix, item));
       result = result.concat(cFiles);
     }
   });
