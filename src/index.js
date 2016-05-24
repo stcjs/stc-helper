@@ -187,3 +187,39 @@ export function isRemoteUrl(url){
   url = url.toLowerCase();
   return url.indexOf('http://') === 0 || url.indexOf('https://') === 0 || url.indexOf('//') === 0;
 }
+/**
+ * change mode
+ */
+export function chmod(dir, mode = '0777'){
+  if(!isExist(dir)){
+    return false;
+  }
+  try{
+    fs.chmodSync(dir, mode);
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+/**
+ * make dir
+ */
+export function mkdir(dir, mode = '0777') {
+  if (isExist(dir)) {
+    return chmod(dir, mode);
+  }
+  let pp = path.dirname(dir);
+  if (isExist(pp)) {
+    try{
+      fs.mkdirSync(dir, mode);
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+  if(mkdir(pp, mode)){
+    return mkdir(dir, mode);
+  }else{
+    return false;
+  }
+}
