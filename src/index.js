@@ -34,6 +34,12 @@ export function isObject(obj){
   return Object.prototype.toString.call(obj) === '[object Object]';
 }
 /**
+ * is string
+ */
+export function isString(obj){
+  return Object.prototype.toString.call(obj) === '[object String]';
+}
+/**
  * is regexp
  */
 export const isRegExp = util.isRegExp;
