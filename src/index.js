@@ -169,8 +169,11 @@ export function md5(str){
  * async replace content
  */
 export async function asyncReplace(content = '', replace, callback){
-  let match = content.match(replace);
-  if(!match){
+  let match = [];
+  content.replace(replace, (...args) => {
+    match.push(args);
+  });
+  if(!match.length){
     return content;
   }
   let promises = match.map(args => {
@@ -179,9 +182,9 @@ export async function asyncReplace(content = '', replace, callback){
   let data = await Promise.all(promises);
   let result = '', prevIndex = 0;
   match.forEach((item, idx) => {
-    let index = content.indexOf(item);
-    result += content.substr(prevIndex, index) + data[idx];
-    prevIndex += item.length;
+    let index = content.indexOf(item[0], prevIndex);
+    result += content.substring(prevIndex, index) + data[idx];
+    prevIndex = index + item[0].length;
   });
   result += content.substr(prevIndex);
   return result;
