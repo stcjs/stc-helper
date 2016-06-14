@@ -20,6 +20,13 @@ test('extend 3', t => {
   t.deepEqual(data, {name: {value: '1'}});
 });
 
+test('extend 4', t => {
+  let data = extend({
+    name: ['1']
+  }, {name:['2']});
+  t.deepEqual(data, {name: ['2']});
+});
+
 
 test('asyncReplace', async (t) => {
   let content = 'abca';
