@@ -42,6 +42,11 @@ check is array.
 
 check is function.
 
+### isObject(obj)
+
+### isString(str)
+
+
 ### isRegExp(regexp)
 
 check is RegExp.
@@ -49,6 +54,19 @@ check is RegExp.
 ### isExist(filePath)
 
 check file/dir is exist.
+
+### isFile(filepath)
+
+### isDirectory(dir)
+
+
+### extend(target, source)
+
+deep copy
+
+```js
+let obj = extend({}, {name: 'stc'})
+```
 
 ### getFiles(dir, prefix = '')
 
@@ -111,3 +129,17 @@ let fn = async content => {
   });
 }
 ```
+
+### isRemoteUrl(url)
+
+check is remote url
+
+```js
+isRemoteUrl('http://www.stcjs.org/'); //true
+isRemoteUrl('https://www.stcjs.org/'); //true
+isRemoteUrl('//www.stcjs.org/'); //true
+```
+
+### chmod(dir)
+
+### mkdir(dir)
