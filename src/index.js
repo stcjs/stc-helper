@@ -193,6 +193,9 @@ export async function asyncReplace(content = '', replace, callback){
  * check if is remote url
  */
 export function isRemoteUrl(url){
+  if(!url){
+    return false;
+  }
   url = url.toLowerCase();
   return url.indexOf('http://') === 0 || url.indexOf('https://') === 0 || url.indexOf('//') === 0;
 }
