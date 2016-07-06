@@ -235,3 +235,14 @@ export function mkdir(dir, mode = '0777') {
     return false;
   }
 }
+
+/**
+ * resource regexp
+ */
+export const ResourceRegExp = {
+  background: /url\s*\(\s*([\'\"]?)([\w\-\/\.\@]+\.(?:png|jpg|gif|jpeg|ico|cur|webp))(?:\?[^\?\'\"\)\s]*)?\1\s*\)/ig,
+  font: /url\s*\(\s*([\'\"]?)([^\'\"\?]+\.(?:eot|woff|woff2|ttf|svg))([^\s\)\'\"]*)\1\s*\)/ig,
+  filter: /src\s*=\s*([\'\"])?([^\'\"]+\.(?:png|jpg|gif|jpeg|ico|cur|webp))(?:\?[^\?\'\"\)\s]*)?\1\s*/ig,
+  cdn: /\{\s*([\'\"]?)cdn\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.cdn/gi,
+  inline: /\{\s*([\'\"]?)inline\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.inline/gi
+}
