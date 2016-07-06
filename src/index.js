@@ -7,7 +7,7 @@ import fs from 'fs';
 /**
  * is stream
  */
-export function isStream(stream){
+export function isStream(stream) {
   return !!stream && stream instanceof Stream;
 }
 
@@ -30,13 +30,13 @@ export function isFunction(obj) {
 /**
  * is object
  */
-export function isObject(obj){
+export function isObject(obj) {
   return Object.prototype.toString.call(obj) === '[object Object]';
 }
 /**
  * is string
  */
-export function isString(obj){
+export function isString(obj) {
   return Object.prototype.toString.call(obj) === '[object String]';
 }
 /**
@@ -49,11 +49,11 @@ export const isRegExp = util.isRegExp;
  */
 export function isExist(dir) {
   dir = path.normalize(dir);
-  if(fs.accessSync){
-    try{
+  if (fs.accessSync) {
+    try {
       fs.accessSync(dir, fs.R_OK);
       return true;
-    }catch(e){
+    } catch (e) {
       return false;
     }
   }
@@ -63,8 +63,8 @@ export function isExist(dir) {
 /**
  * check filepath is file
  */
-export function isFile(filePath){
-  if(!isExist(filePath)){
+export function isFile(filePath) {
+  if (!isExist(filePath)) {
     return false;
   }
   let stat = fs.statSync(filePath);
@@ -74,8 +74,8 @@ export function isFile(filePath){
 /**
  * check path is directory
  */
-export function isDirectory(filePath){
-  if(!isExist(filePath)){
+export function isDirectory(filePath) {
+  if (!isExist(filePath)) {
     return false;
   }
   let stat = fs.statSync(filePath);
@@ -84,25 +84,25 @@ export function isDirectory(filePath){
 /**
  * extend
  */
-export function extend(target, source){
+export function extend(target, source) {
   let src, copy;
-  if(!target){
+  if (!target) {
     target = isArray(source) ? [] : {};
   }
-  if(!source){
+  if (!source) {
     return target;
   }
-  for(let key in source){
+  for (let key in source) {
     src = target[key];
     copy = source[key];
-    if(src && src === copy){
+    if (src && src === copy) {
       continue;
     }
-    if(isObject(copy)){
+    if (isObject(copy)) {
       target[key] = extend(src && isObject(src) ? src : {}, copy);
-    }else if(isArray(copy)){
+    } else if (isArray(copy)) {
       target[key] = extend([], copy);
-    }else{
+    } else {
       target[key] = copy;
     }
   }
@@ -112,11 +112,11 @@ export function extend(target, source){
 /**
  * get path files
  */
-export function getFiles(dir, prefix = ''){
-  if(!isExist(dir)){
+export function getFiles(dir, prefix = '') {
+  if (!isExist(dir)) {
     return [];
   }
-  if(isFile(dir)){
+  if (isFile(dir)) {
     return [dir];
   }
   let files = fs.readdirSync(dir);
@@ -125,7 +125,7 @@ export function getFiles(dir, prefix = ''){
     let stat = fs.statSync(path.join(dir, item));
     if (stat.isFile()) {
       result.push(path.join(prefix, item));
-    }else if(stat.isDirectory()){
+    } else if (stat.isDirectory()) {
       let cFiles = getFiles(path.join(dir, item), path.join(prefix, item));
       result = result.concat(cFiles);
     }
@@ -149,7 +149,7 @@ export function promisify(fn, receiver) {
 /**
  * defer
  */
-export function defer(){
+export function defer() {
   let deferred = {};
   deferred.promise = new Promise((resolve, reject) => {
     deferred.resolve = resolve;
@@ -161,19 +161,19 @@ export function defer(){
 /**
  * md5
  */
-export function md5(str){
+export function md5(str) {
   return crypto.createHash('md5').update(str + '', 'utf8').digest('hex');
 }
 
 /**
  * async replace content
  */
-export async function asyncReplace(content = '', replace, callback){
+export async function asyncReplace(content = '', replace, callback) {
   let match = [];
   content.replace(replace, (...args) => {
     match.push(args);
   });
-  if(!match.length){
+  if (!match.length) {
     return content;
   }
   let promises = match.map(args => {
@@ -192,8 +192,8 @@ export async function asyncReplace(content = '', replace, callback){
 /**
  * check if is remote url
  */
-export function isRemoteUrl(url){
-  if(!url){
+export function isRemoteUrl(url) {
+  if (!url) {
     return false;
   }
   url = url.toLowerCase();
@@ -202,14 +202,14 @@ export function isRemoteUrl(url){
 /**
  * change mode
  */
-export function chmod(dir, mode = '0777'){
-  if(!isExist(dir)){
+export function chmod(dir, mode = '0777') {
+  if (!isExist(dir)) {
     return false;
   }
-  try{
+  try {
     fs.chmodSync(dir, mode);
     return true;
-  }catch(e){
+  } catch (e) {
     return false;
   }
 }
@@ -222,16 +222,16 @@ export function mkdir(dir, mode = '0777') {
   }
   let pp = path.dirname(dir);
   if (isExist(pp)) {
-    try{
+    try {
       fs.mkdirSync(dir, mode);
       return true;
-    }catch(e){
+    } catch (e) {
       return false;
     }
   }
-  if(mkdir(pp, mode)){
+  if (mkdir(pp, mode)) {
     return mkdir(dir, mode);
-  }else{
+  } else {
     return false;
   }
 }
@@ -246,3 +246,34 @@ export const ResourceRegExp = {
   cdn: /\{\s*([\'\"]?)cdn\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.cdn/gi,
   inline: /\{\s*([\'\"]?)inline\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.inline/gi
 }
+
+/**
+ * background url mapper
+ * construct from a string
+ * can modify url for further changes
+ */
+export class BackgroundURLMapper {
+  constructor(str) {
+    this.orginalStr = str;
+    this.reg.lastIndex = 0;
+    let matches = ResourceRegExp.background.exec(str);
+    this.url = matches && matches.length > 2 && matches[2];
+    if (!this.url) {
+      throw new TypeError("URLMapper: invalid url");
+    }
+    this.originalUrl = this.url;
+    let pivot = str.indexOf(this.url);
+    this.prev = str.slice(0, pivot);
+    this.next = str.slice(pivot + this.url.length);
+    this.type = /(png|jpg|gif|jpeg|ico|cur|webp)$/.exec(this.url)[1];
+  }
+  reset() {
+    this.url = this.originalUrl;
+  }
+  valueOf() {
+    return this.prev + this.url + this.next;
+  }
+  isRemoteUrl() {
+    return isRemoteUrl(this.url);
+  }
+};
