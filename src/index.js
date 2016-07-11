@@ -244,7 +244,7 @@ export const ResourceRegExp = {
   font: /url\s*\(\s*([\'\"]?)([^\'\"\?]+\.(?:eot|woff|woff2|ttf|svg))([^\s\)\'\"]*)\1\s*\)/ig,
   filter: /src\s*=\s*([\'\"])?([^\'\"]+\.(?:png|jpg|gif|jpeg|ico|cur|webp))(?:\?[^\?\'\"\)\s]*)?\1\s*/ig,
   cdn: /\{\s*([\'\"]?)cdn\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.cdn/gi,
-  inline: /\{\s*([\'\"]?)inline\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.inline/gi
+  inline: /\{\s*([\'\"]?)inline\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.inline/gi,
 }
 
 /**
@@ -255,7 +255,7 @@ export const ResourceRegExp = {
 export class BackgroundURLMapper {
   constructor(str) {
     this.orginalStr = str;
-    this.reg.lastIndex = 0;
+    ResourceRegExp.background.lastIndex = 0;
     let matches = ResourceRegExp.background.exec(str);
     this.url = matches && matches.length > 2 && matches[2];
     if (!this.url) {
