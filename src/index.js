@@ -243,9 +243,22 @@ export const ResourceRegExp = {
   background: /url\s*\(\s*([\'\"]?)([\w\-\/\.\@]+\.(?:png|jpg|gif|jpeg|ico|cur|webp))(?:\?[^\?\'\"\)\s]*)?\1\s*\)/ig,
   font: /url\s*\(\s*([\'\"]?)([^\'\"\?]+\.(?:eot|woff|woff2|ttf|svg))([^\s\)\'\"]*)\1\s*\)/ig,
   filter: /src\s*=\s*([\'\"])?([^\'\"]+\.(?:png|jpg|gif|jpeg|ico|cur|webp))(?:\?[^\?\'\"\)\s]*)?\1\s*/ig,
-  cdn: /\{\s*([\'\"]?)cdn\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.cdn/gi,
-  inline: /\{\s*([\'\"]?)inline\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.inline/gi,
-}
+  cdn: /\{\s*([\'\"]?)cdn\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.cdn/ig,
+  inline: /\{\s*([\'\"]?)inline\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.inline/ig
+};
+
+/**
+ * resource in tag attrs
+ */
+export const htmlTagResourceAttrs = {
+  img: ['src', 'srcset'],
+  script: ['src'],
+  link: ['href'],
+  param: ['value'],
+  embed: ['src'],
+  object: ['data'],
+  source: ['src', 'srcset']
+};
 
 /**
  * background url mapper
@@ -259,7 +272,7 @@ export class BackgroundURLMapper {
     let matches = ResourceRegExp.background.exec(str);
     this.url = matches && matches.length > 2 && matches[2];
     if (!this.url) {
-      throw new TypeError("URLMapper: invalid url");
+      throw new TypeError('URLMapper: invalid url');
     }
     this.originalUrl = this.url;
     let pivot = str.indexOf(this.url);
@@ -276,4 +289,4 @@ export class BackgroundURLMapper {
   isRemoteUrl() {
     return isRemoteUrl(this.url);
   }
-};
+}
