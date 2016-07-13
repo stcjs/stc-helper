@@ -84,28 +84,30 @@ export function isDirectory(filePath) {
 /**
  * extend
  */
-export function extend(target, source) {
+export function extend(target, ...sources) {
   let src, copy;
   if (!target) {
-    target = isArray(source) ? [] : {};
+    target = isArray(sources[0]) ? [] : {};
   }
-  if (!source) {
-    return target;
-  }
-  for (let key in source) {
-    src = target[key];
-    copy = source[key];
-    if (src && src === copy) {
-      continue;
+  sources.forEach(source => {
+    if(!source){
+      return;
     }
-    if (isObject(copy)) {
-      target[key] = extend(src && isObject(src) ? src : {}, copy);
-    } else if (isArray(copy)) {
-      target[key] = extend([], copy);
-    } else {
-      target[key] = copy;
+    for (let key in source) {
+      src = target[key];
+      copy = source[key];
+      if (src && src === copy) {
+        continue;
+      }
+      if (isObject(copy)) {
+        target[key] = extend(src && isObject(src) ? src : {}, copy);
+      } else if (isArray(copy)) {
+        target[key] = extend([], copy);
+      } else {
+        target[key] = copy;
+      }
     }
-  }
+  });
   return target;
 }
 
