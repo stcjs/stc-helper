@@ -5,8 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/stcjs/stc-helper/badge.svg?branch=master)](https://coveralls.io/github/stcjs/stc-helper?branch=master)
 [![Dependency Status](https://david-dm.org/stcjs/stc-helper.svg)](https://david-dm.org/stcjs/stc-helper)
 
-
-helper for stc
+helper for stc.
 
 ## Install
 
@@ -39,6 +38,13 @@ if(isStream(stream){
 ### isBuffer(buffer)
 
 check is buffer.
+
+```js
+import {isBuffer} from 'stc-helper';
+if(isBuffer(buf){
+  
+}
+```
 
 ### isArray(arr)
 
