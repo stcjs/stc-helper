@@ -1,5 +1,11 @@
 # stc-helper
 
+[![NPM version](https://img.shields.io/npm/v/stc-helper.svg?style=flat-square)](http://badge.fury.io/js/stc-helper)
+[![Build Status](https://travis-ci.org/stcjs/stc-helper.svg?branch=master)](https://travis-ci.org/stcjs/stc-helper)
+[![Coverage Status](https://coveralls.io/repos/github/stcjs/stc-helper/badge.svg?branch=master)](https://coveralls.io/github/stcjs/stc-helper?branch=master)
+[![Dependency Status](https://david-dm.org/stcjs/stc-helper.svg)](https://david-dm.org/stcjs/stc-helper)
+
+
 helper for stc
 
 ## Install
