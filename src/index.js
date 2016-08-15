@@ -40,6 +40,49 @@ export function isString(obj) {
   return Object.prototype.toString.call(obj) === '[object String]';
 }
 /**
+ * is number
+ */
+export function isNumber(obj) {
+  return Object.prototype.toString.call(obj) === '[object Number]';
+}
+/**
+ * is true empty
+ */
+export function isTrueEmpty(obj) {
+  if(obj === undefined || obj === null || obj === ''){
+    return true;
+  }
+  if(isNumber(obj) && isNaN(obj)){
+    return true;
+  }
+  return false;
+}
+/**
+ * is empty
+ */
+export function isEmpty(obj) {
+  if(isTrueEmpty(obj)){
+    return true;
+  }
+
+  if (isObject(obj)) {
+    for(let key in obj){
+      return !key && !0;
+    }
+    return true;
+  }else if (isArray(obj)) {
+    return obj.length === 0;
+  }else if (isString(obj)) {
+    return obj.length === 0;
+  }else if (isNumber(obj)) {
+    return obj === 0;
+  }else if (isBoolean(obj)) {
+    return !obj;
+  }
+  return false;
+}
+
+/**
  * is regexp
  */
 export const isRegExp = util.isRegExp;
