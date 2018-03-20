@@ -285,9 +285,9 @@ export function mkdir(dir, mode = '0777') {
  * resource regexp
  */
 export const ResourceRegExp = {
-  background: /url\s*\(\s*([\'\"]?)([\w\-\/\.\@]+\.(?:png|jpg|gif|jpeg|ico|cur|webp))(?:\?[^\?\'\"\)\s]*)?\1\s*\)/ig,
+  background: /url\s*\(\s*([\'\"]?)([\w\-\/\.\@]+\.(?:png|jpg|gif|jpeg|ico|cur|webp|svg))(?:\?[^\?\'\"\)\s]*)?\1\s*\)/ig,
   font: /url\s*\(\s*([\'\"]?)([^\'\"\?]+\.(?:eot|woff2|woff|ttf|svg|otf))([^\s\)\'\"]*)\1\s*\)/ig,
-  filter: /src\s*=\s*([\'\"])?([^\'\"]+\.(?:png|jpg|gif|jpeg|ico|cur|webp))(?:\?[^\?\'\"\)\s]*)?\1\s*/ig,
+  filter: /src\s*=\s*([\'\"])?([^\'\"]+\.(?:png|jpg|gif|jpeg|ico|cur|webp|svg))(?:\?[^\?\'\"\)\s]*)?\1\s*/ig,
   cdn: /\{\s*([\'\"]?)cdn\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.cdn/ig,
   inline: /\{\s*([\'\"]?)inline\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.inline/ig
 };
@@ -323,7 +323,7 @@ export class BackgroundURLMapper {
     let pivot = str.indexOf(this.url);
     this.prev = str.slice(0, pivot);
     this.next = str.slice(pivot + this.url.length);
-    this.type = /(png|jpg|gif|jpeg|ico|cur|webp)$/.exec(this.url)[1];
+    this.type = /(png|jpg|gif|jpeg|ico|cur|webp|svg)$/.exec(this.url)[1];
   }
   reset() {
     this.url = this.originalUrl;
