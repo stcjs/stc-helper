@@ -27,6 +27,10 @@ export const isArray = Array.isArray;
 export function isFunction(obj) {
   return typeof obj === 'function';
 }
+
+export function isBoolean(obj) {
+  return Object.prototype.toString.call(obj) === '[object isBoolean]';
+}
 /**
  * is object
  */
@@ -288,7 +292,7 @@ export const ResourceRegExp = {
   background: /url\s*\(\s*([\'\"]?)([\w\-\/\.\@]+\.(?:png|jpg|gif|jpeg|ico|cur|webp|svg))(?:\?[^\?\'\"\)\s]*)?\1\s*\)/ig,
   font: /url\s*\(\s*([\'\"]?)([^\'\"\?]+\.(?:eot|woff2|woff|ttf|svg|otf))([^\s\)\'\"]*)\1\s*\)/ig,
   filter: /src\s*=\s*([\'\"])?([^\'\"]+\.(?:png|jpg|gif|jpeg|ico|cur|webp|svg))(?:\?[^\?\'\"\)\s]*)?\1\s*/ig,
-  cdn: /\{\s*([\'\"]?)cdn\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.cdn/ig,
+  cdn: /\{\s*([\'\"]?)cdn\1\s*\:\s*([\'\"])([\w\/\-\.\@]+)\2\s*\}\.cdn/ig,
   inline: /\{\s*([\'\"]?)inline\1\s*\:\s*([\'\"])([\w\/\-\.]+)\2\s*\}\.inline/ig
 };
 
